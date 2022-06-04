@@ -65,8 +65,14 @@ class Picture(Area):
    def __init__(self, filename, x=0, y=0, width=10, height=10):
        Area.__init__(self, x=x, y=y, width=width, height=height, color=None)
        self.image = pygame.image.load(filename)
+       self.width=width
+       self.height=height
    def draw(self):
        mw.blit(self.image, (self.rect.x, self.rect.y))
+   def fill_back(self, filename):
+       self.imageback = pygame.image.load(filename)
+       self.imageback = pygame.transform.scale(self.imageback, (self.width,self.height))
+       mw.blit(self.imageback, (self.rect.x, self.rect.y))
    def resize(self, w, h):
        self.image = pygame.transform.scale(self.image, (w,h))
        
@@ -145,7 +151,7 @@ while game_over != True:
         m.draw()
         if m.rect.colliderect(ball.rect):
             monsters.remove(m)
-            m.fill()
+            m.fill_back("win.png") #вместо fill
             dy *= -1
     if platform.rect.x < 0:
         platform.rect.x = 0
